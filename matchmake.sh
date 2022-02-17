@@ -5,7 +5,6 @@ file="matchmake.properties"
 
 if [ -f "$file" ]
 then
-  
   echo "$file found."
   api_base=$(sed -rn 's/^api.base=([^\n]+)$/\1/p' $file)
   game_id=$(sed -rn 's/^game.id=([^\n]+)$/\1/p' $file)
@@ -78,11 +77,13 @@ do
 
     if [[ $tickerStatus == *matched* ]]
     then
-        printf "Found a match - playerToken: $playerToken\n$launchGame"
+        printf "Found a match - playerToken: $playerToken\n"
+        echo $launchGame
         exit 0
     elif [[ $tickerStatus == *notMatched* ]]
     then
-        printf "Not matched, you can play anyway - playerToken: $playerToken\n$launchGame"
+        printf "Not matched, you can play anyway - playerToken: $playerToken\n"
+        echo $launchGame
         exit 0        
     fi
 
