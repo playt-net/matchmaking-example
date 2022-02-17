@@ -1,13 +1,21 @@
 #!/bin/bash
 echo "This script will trigger a matchmaking with the given parameters and return a playerToken. This token can be used by the game server to communicate with our api."
 
-file="./matchmake.properties"
+file="matchmake.properties"
 
 if [ -f "$file" ]
 then
+  
   echo "$file found."
-  # Read properties file and export vars - replaces . with _ for keys
-  source <(grep -v '^ *#' $file | grep '[^ ] *=' | awk '{split($0,a,"="); print gensub(/\./, "_", "g", a[1]) "=" a[2]}')
+  api_base=$(sed -rn 's/^api.base=([^\n]+)$/\1/p' $file)
+  game_id=$(sed -rn 's/^game.id=([^\n]+)$/\1/p' $file)
+  game_url=$(sed -rn 's/^game.url=([^\n]+)$/\1/p' $file)
+  game_client_id=$(sed -rn 's/^game.client.id=([^\n]+)$/\1/p' $file)
+  game_client_secret=$(sed -rn 's/^game.client.secret=([^\n]+)$/\1/p' $file)
+  user_client_id=$(sed -rn 's/^user.client.id=([^\n]+)$/\1/p' $file)
+  user_client_secret=$(sed -rn 's/^user.client.secret=([^\n]+)$/\1/p' $file)
+  user_login=$(sed -rn 's/^user.login=([^\n]+)$/\1/p' $file)
+  user_password=$(sed -rn 's/^user.password=([^\n]+)$/\1/p' $file)
   
   echo "Api Base          = " ${api_base}
   echo "Game Id           = " ${game_id}
@@ -49,7 +57,7 @@ ticketId=${ticketIdPairDirty//\"/}
 printf "ticketId for user: $ticketId\n\n"
 
 # Check for matchmaking status and only return the playerToken, once the status is 'matched' or 'notMatched'
-clear
+#clear
 counter=0
 sleepTime=5
 for (( ; ; ))
