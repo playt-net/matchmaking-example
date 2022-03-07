@@ -49,7 +49,7 @@ ticketIdPairDirty=$(curl -s --location --request POST "${api_base}/matchmaking/s
 --header 'Content-Type: application/json' \
 --data-raw "{
     \"gameId\": \"$game_id\",
-    \"gameMode\": \"1_vs_1\",
+    \"gameMode\": \"1vs1\",
     \"denominationTier\": \"denomination_tier_0\"
 }" | grep -oP '"ticketId": *\K"[^"]*"')
 ticketId=${ticketIdPairDirty//\"/}
